@@ -1,5 +1,11 @@
 # tls example
 
+win10
+set OPENSSL_LIB_DIR=C:/OpenSSL-Win64
+set OPENSSL_INCLUDE_DIR=C:/OpenSSL-Win64/include
+cargo build
+
+包位置：.\examples\target\debug
 ## Usage
 
 ### server

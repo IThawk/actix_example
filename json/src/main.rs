@@ -46,7 +46,7 @@ async fn index_manual(mut payload: web::Payload) -> Result<HttpResponse, Error> 
     Ok(HttpResponse::Ok().json(obj)) // <- send response
 }
 
-/// This handler manually load request payload and parse json-rust
+/// This handler manually load request payload and parse json-rust test
 async fn index_mjsonrust(body: Bytes) -> Result<HttpResponse, Error> {
     // body is loaded, now we can deserialize json-rust
     let result = json::parse(std::str::from_utf8(&body).unwrap()); // return Result

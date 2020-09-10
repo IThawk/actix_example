@@ -9,7 +9,7 @@ async fn save_file(mut payload: Multipart) -> Result<HttpResponse, Error> {
     while let Ok(Some(mut field)) = payload.try_next().await {
         let content_type = field.content_disposition().unwrap();
         let filename = content_type.get_filename().unwrap();
-        let filepath = format!("./tmp/{}", filename);
+        let filepath = format!("./tmp/{}", sanitize_filename::sanitize(&filename));
         // File::create is blocking operation, use threadpool
         let mut f = web::block(|| std::fs::File::create(filepath))
             .await
@@ -30,7 +30,7 @@ fn index() -> HttpResponse {
         <body>
             <form target="/" method="post" enctype="multipart/form-data">
                 <input type="file" multiple name="file"/>
-                <input type="submit" value="Submit"></button>
+                <button type="submit">Submit</button>
             </form>
         </body>
     </html>"#;

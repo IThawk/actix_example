@@ -12,7 +12,7 @@ async fn save_file(mut payload: Multipart) -> Result<HttpResponse, Error> {
         let filename = content_type
             .get_filename()
             .ok_or_else(|| actix_web::error::ParseError::Incomplete)?;
-        let filepath = format!("./tmp/{}", filename);
+        let filepath = format!("./tmp/{}", sanitize_filename::sanitize(&filename));
         let mut f = async_std::fs::File::create(filepath).await?;
 
         // Field in turn is stream of *Bytes* object
@@ -30,7 +30,7 @@ fn index() -> HttpResponse {
         <body>
             <form target="/" method="post" enctype="multipart/form-data">
                 <input type="file" multiple name="file"/>
-                <input type="submit" value="Submit"></button>
+                <button type="submit">Submit</button>
             </form>
         </body>
     </html>"#;
